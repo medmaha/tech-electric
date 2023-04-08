@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#searchBar::placeholder {
+    color: rgba(255, 255, 255, 0.771);
+}
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+nav ul li {
+    font-size: small;
+}
