@@ -65,7 +65,7 @@
 </script>
 
 
-<div bind:this={container} id="header" class="h-[calc(100vh)] relative w-full overflow-hidden " style="margin-top: -70px;">
+<div bind:this={container} id="header" class="h-[calc(100vh)] relative w-full overflow-hidden " style="margin-top: -105px; z-index: 0;">
     <div class="absolute w-full h-full" style="z-index: 0;">
         <img src="/headline.jpeg" alt="" class="w-full min-w-[100vw] min-h-[100vh] h-full object-cover">
     </div>

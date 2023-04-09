@@ -8,7 +8,6 @@
 
 
 <div in:fade class="">
-
 	<Headers/>
 	<AboutUs/>
 	<Courses/>

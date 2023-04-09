@@ -37,7 +37,7 @@
                  <div class="flex items-center justify-center h-[100px]">
                     <img src="/assets/services-electric.png" width="100px" height="100px" alt="">
                 </div>
-                <h5 class="text-center font-semibold">Electricity</h5>
+                <h5 class="text-center font-semibold">Electrical Installation</h5>
                 <p class="texts-sm text-center max-w-[35ch]">
                     At TETI, learn electrical installation for modern buildings. Our training covers design, installation, and maintenance for a successful career in this critical field. Join us today to gain the skills you need.
                 </p>
