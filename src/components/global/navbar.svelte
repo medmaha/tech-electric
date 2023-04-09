@@ -1,11 +1,11 @@
 
 
 <script lang='ts'>
+    import {BasketCart} from "$store/basket"
 	import { fade, scale } from "svelte/transition";
 	import NavDrawer from "./navDrawer.svelte";
 
-	import NavLinks from "./navLinks.svelte";
-    
+	import NavLinks from "./navLinks.svelte";    
     let timeout : any
 
     let navDrawer : boolean = false
@@ -17,6 +17,7 @@
      const navigate = (ev:any)=>{
         ev.preventDefault()
         const href :string = ev.currentTarget.href
+        const pathName = window.location.pathname
 
         if (href.match(/#/)){
             const id = href.split('#')[1]
@@ -24,7 +25,11 @@
             targetElement?.scrollIntoView({behavior:'smooth'})
 
             if (id === 'header'){
-                sleep('/', ev, 250)
+                if (pathName === '/'){
+                    sleep('/', ev, 250)
+                }else{
+                    window.location.href = '/'
+                }
                 return
             }
             sleep(href, ev)
@@ -61,12 +66,12 @@
 <nav class="h-[70px] bg-black bg-opacity-50 backdrop-blur-[2px] text-white z-50 shadow-md ">
     <div class="container px-2 md:px-0 ">
         <div class="flex gap-2 items-center">
-            <a href="/" class="inline-flex gap-1 items-center">
+            <button on:click={()=>window.location.reload()}  class="inline-flex gap-1 items-center">
                 <img src="/logo.png" width="45px" height="45px" class="rounded-full" alt="TETI (Tec Electrical) logo">
                 <h1 class="text-xl md:text-2xl font-bold tracking-wide">
                     TETI
                 </h1>
-            </a>
+            </button>
         </div>
 
         <div class="w-full h-full flex items-center flex-1 max-w-[350px]">
@@ -86,10 +91,18 @@
            <NavLinks navigate={navigate}/>
         </div>
 
-        <button data-drawer-toggler on:click={toggleNavDrawer} class={`${navDrawer ? 'active':''} flex flex-col p-2 gap-[4px] cursor-pointer md:hidden`}>
+        <button data-drawer-toggler on:click={toggleNavDrawer} class={`relative ${navDrawer ? 'active':''} flex flex-col p-2 gap-[4px] cursor-pointer md:hidden`}>
             <span class="inline-block w-8 h-1 bg-white"></span>
             <span class="inline-block w-8 h-1 bg-white"></span>
             <span class="inline-block w-8 h-1 bg-white"></span>
+
+            {#if $BasketCart.total > 0}
+            <div class="absolute top-[2px] right-0 xl:left-[70%]" in:scale out:fade>
+                <span class="inline-flex min-w-[15px] h-[15px] rounded-full bg-red-400">
+            
+                </span>
+            </div>
+            {/if}
         </button>
 
         {#if navDrawer}
