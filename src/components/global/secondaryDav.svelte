@@ -9,7 +9,7 @@
 
 <div class="nav z-50 sticky top-[-35px] bg-black bg-opacity-50 backdrop-blur-[2px] hidden md:block">
     <div class="container px-2 md:px-0 md:pr-[.7rem]">
-        <a href="/blog" class={`${d ? '': 'active'}`}>
+        <a href="/blog" class={`${d ? 'active': ''}`}>
             blog
         </a>
         <a href="/services" class="">
