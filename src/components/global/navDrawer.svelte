@@ -48,8 +48,8 @@
                 </li>
              
                 <li class="rounded-md relative inline-block gap-2 w-full bg-green-500 bg-opacity-0 hover:bg-opacity-80 hover:text-white transition">
-                     <a href='/basket' style="gap:0px"  class="relative inline-flex items-center">
-                        <span class="px-4">
+                     <a href='/basket' style="gap:0px;"  class="relative inline-flex items-center">
+                        <span class="pr-4">
                             Shopping Cart
                         </span>
                         <span class='pl-2'>
