@@ -1,7 +1,8 @@
 <script lang="ts">
+    import {enhance} from '$app/forms'
 
     type Product = {
-        id:string
+        _id:string
         name:string,
         imgUrl:string
         altText:string
@@ -21,9 +22,8 @@
     
     export let data : Product
     
-    let product = {
+    $: product = {
         ...data,
-        id:data.imgUrl,
         qty:1
     }
 
@@ -38,13 +38,31 @@
 
     function addToBasket(){
          addItem({
-                id:product.id,
+                _id:product._id,
                 name:product.name,
                 imgUrl:product.imgUrl,
                 hint:product.hint,
                 price:product.price,
                 qty:product.qty
             })
+    }
+
+    function enhanceRequest({ form, data, action, cancel, submitter }:any){
+        // `form` is the `<form>` element
+        // `data` is its `FormData` object
+        // `action` is the URL to which the form is posted
+        // `cancel()` will prevent the submission
+        // `submitter` is the `HTMLElement` that caused the form to be submitted
+
+        console.log(data)
+
+        return async ({ result, update }:any) => {
+            // `result` is an `ActionResult` object
+            // `update` is a function which triggers the logic that would be
+            // triggered if this callback wasn't set
+
+            update()
+        };
     }
 
 </script>
@@ -64,18 +82,21 @@
     </div>
     <!-- <a href="/#" class="text-center text-sm tracking-wide text-green-500 hover:text-green-600 transition">More details!</a> -->
 
-    <div class="product-add flex items-center justify-between flex-wrap gap-1 sm:gap-2 px-2 sm:px-1 mt-2">
-        <div class="qty border-[1px] border-gray-400 rounded-md overflow-hidden flex items-center">
-            <button on:click={()=>changeQty('dec')} class="increment px-1 sm:px-2  transition hover:bg-gray-100">-</button>
+    <form use:enhance={enhanceRequest} method='POST' class="product-add flex items-center justify-between flex-wrap gap-1 sm:gap-2 px-2 sm:px-1 mt-2">
+        <input type="hidden" value={product.qty} name='qty'>
+        <input type="hidden" value={product._id} name='pid'>
+        <input type="hidden" value={product.price} name='price'>
+        <div  class="qty border-[1px] border-gray-400 rounded-md overflow-hidden flex items-center">
+            <button type='button' on:click={()=>changeQty('dec')} class="increment px-1 sm:px-2  transition hover:bg-gray-100">-</button>
             <span class="min-w-[30px] text-center inline-block bg-gray-200">{product.qty}</span>
-            <button on:click={()=>changeQty('inc')} class="decrement px-1 sm:px-2 transition hover:bg-gray-100">+</button>
+            <button type='button' on:click={()=>changeQty('inc')} class="decrement px-1 sm:px-2 transition hover:bg-gray-100">+</button>
         </div>
         <div class="w-max h-[35px]">
-            <button on:click={addToBasket} class="w-[35px] h-[35px] bg-gray-200 hover:bg-green-200 hover:bg-opacity-30 transition inline-flex items-center justify-center rounded-full hover:text-green-500">
+            <button formaction='?/addItem' on:click={addToBasket} class="w-[35px] h-[35px] bg-gray-200 hover:bg-green-200 hover:bg-opacity-30 transition inline-flex items-center justify-center rounded-full hover:text-green-500">
                 <svg  xmlns="http://www.w3.org/2000/svg" fill-opacity='.8' fill='currentColor' width="18" height="18" viewBox="0 0 24 24"><path d="M11 9h2V6h3V4h-3V1h-2v3H8v2h3v3zm-4 9c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zm-9.83-3.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.86-7.01L19.42 4h-.01l-1.1 2-2.76 5H8.53l-.13-.27L6.16 6l-.95-2-.94-2H1v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.13 0-.25-.11-.25-.25z"/></svg>
             </button>
         </div>
-    </div>
+    </form>
 </div>
 
 

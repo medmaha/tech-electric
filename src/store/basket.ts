@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 
 export interface BasketItem {
-	id: string;
+	_id: string;
 	name: string;
 	imgUrl: string;
 	hint: string;
@@ -18,13 +18,14 @@ interface Basket {
 export const BasketCart = writable<Basket>({ total: 0, price: 0, items: [] });
 
 export function addItem(item: BasketItem) {
+	let s: any;
 	BasketCart.update((store) => {
 		let foundMatched = false;
 		let totalQuantity = 0;
 		let totalPrice = 0;
 
 		const basketItems = store.items.map((current) => {
-			if (current.id === item.id) {
+			if (current._id === item._id) {
 				foundMatched = true;
 				totalQuantity += item.qty;
 				totalPrice += item.qty * item.price;
@@ -41,17 +42,20 @@ export function addItem(item: BasketItem) {
 			totalPrice += item.qty * item.price;
 		}
 
-		return {
+		s = {
 			total: totalQuantity,
 			price: totalPrice,
 			items: basketItems
 		};
+		return s;
 	});
+
+	// console.log(s);
 }
 
 export function removeItem(itemId: string) {
 	BasketCart.update((store) => {
-		const $basketItems = store.items.filter((item) => item.id !== itemId);
+		const $basketItems = store.items.filter((item) => item._id !== itemId);
 
 		const { sum, count } = $basketItems.reduce(
 			(total, item) => {

@@ -64,7 +64,7 @@
 </script>
 
 <nav class="h-[70px] bg-black bg-opacity-50 backdrop-blur-[2px] text-white z-50 shadow-md ">
-    <div class="container  px-2 md:px-0 ">
+    <div class="container px-2 ">
         <div class="flex gap-2 items-center">
             <a href='/' class="inline-flex gap-1 items-center">
                 <img src="/logo.png" width="45px" height="45px" class="rounded-full" alt="TETI (Tec Electrical) logo">
