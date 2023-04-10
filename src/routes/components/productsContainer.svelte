@@ -11,9 +11,10 @@
 
          <div class="py-8 px-1 sm:px-0">
             <div class="flex justify-center flex-wrap gap-2 md:gap-4 lg:gap-6">
-                {#each Object.entries(products) as product, i}
-                    <Product data={{...product[1], qty:0, price:2*i}}/>
+                {#each Object.entries(products) as [productId, product], i}
+                    <Product data={{...product, qty: 0, price: 10 + 2*i + Math.floor(Math.random() * 2) + Math.random()}}/>
                 {/each}
+        
               
             </div>
          </div>

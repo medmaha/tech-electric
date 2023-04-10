@@ -2,13 +2,14 @@
 	import { onMount } from "svelte";
 	import { fade, scale } from "svelte/transition";
 
+     import {BasketCart} from "$store/basket"
+
 
     export let navigate: (ev:any)=>void
-    
-    let pathName:string
-    onMount(()=>{
-        pathName = window.location.pathname
-    })
+     
+    function getCartQty(qty:number):string{
+        return qty.toString()
+    }
 
 </script>
 
@@ -46,14 +47,19 @@
                     
                 </li>
              
-                <li class="rounded-md inline-block gap-2 w-full bg-green-500 bg-opacity-0 hover:bg-opacity-80 hover:text-white transition">
-                     <a on:click={navigate} href="#Contact">
-                        <span>
+                <li class="rounded-md relative inline-block gap-2 w-full bg-green-500 bg-opacity-0 hover:bg-opacity-80 hover:text-white transition">
+                     <a href='/basket' style="gap:0px"  class="relative inline-flex items-center">
+                        <span class="px-4">
                             Shopping Cart
                         </span>
-                        <span class='px-4'>
+                        <span class='pl-2'>
                             <svg xmlns="http://www.w3.org/2000/svg" fill='currentColor' width="18" height="18" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
                         </span>                    
+                        {#if $BasketCart.total > 0}
+                            <span style='transform:translateY(-100%)' class="inline-flex min-w-[15px] h-[15px] text-xs rounded-full text-white bg-red-400 p-[5px] justify-center items-center">
+                                {getCartQty($BasketCart.total)}
+                            </span>
+                        {/if}
                     </a>
                 </li>
             </ul>

@@ -8,7 +8,7 @@
 	import NavLinks from "./navLinks.svelte";    
     let timeout : any
 
-    let navDrawer : boolean = false
+    let navDrawer  = false
 
     function toggleNavDrawer(){
         navDrawer = !navDrawer
@@ -64,14 +64,14 @@
 </script>
 
 <nav class="h-[70px] bg-black bg-opacity-50 backdrop-blur-[2px] text-white z-50 shadow-md ">
-    <div class="container px-2 md:px-0 ">
+    <div class="container  px-2 md:px-0 ">
         <div class="flex gap-2 items-center">
-            <button on:click={()=>window.location.reload()}  class="inline-flex gap-1 items-center">
+            <a href='/' class="inline-flex gap-1 items-center">
                 <img src="/logo.png" width="45px" height="45px" class="rounded-full" alt="TETI (Tec Electrical) logo">
                 <h1 class="text-xl md:text-2xl font-bold tracking-wide">
                     TETI
                 </h1>
-            </button>
+            </a>
         </div>
 
         <div class="w-full h-full flex items-center flex-1 max-w-[350px]">
@@ -91,19 +91,23 @@
            <NavLinks navigate={navigate}/>
         </div>
 
-        <button data-drawer-toggler on:click={toggleNavDrawer} class={`relative ${navDrawer ? 'active':''} flex flex-col p-2 gap-[4px] cursor-pointer md:hidden`}>
-            <span class="inline-block w-8 h-1 bg-white"></span>
-            <span class="inline-block w-8 h-1 bg-white"></span>
-            <span class="inline-block w-8 h-1 bg-white"></span>
-
+        <div class="h-full md:hidden relative">
+           <button data-drawer-toggler on:click={toggleNavDrawer} class={`z-10 ${navDrawer ? 'active':''} 
+           h-full inline-flex flex-col justify-center p-2 gap-[4px] cursor-pointer`}>
+               <span class="inline-block w-8 h-1 bg-white"></span>
+               <span class="inline-block w-8 h-1 bg-white"></span>
+               <span class="inline-block w-8 h-1 bg-white"></span>
+   
+            </button>
             {#if $BasketCart.total > 0}
-            <div class="absolute top-[2px] right-0 xl:left-[70%]" in:scale out:fade>
-                <span class="inline-flex min-w-[15px] h-[15px] rounded-full bg-red-400">
-            
+            <span class="absolute top-3 right-0 pointer-events-none z-0" in:scale out:fade>
+                <span class="inline-flex min-w-[12px] h-[12px] rounded-full bg-red-400">
                 </span>
-            </div>
+            </span>
             {/if}
-        </button>
+        </div>
+
+            
 
         {#if navDrawer}
             <NavDrawer navigate={navigate}/>

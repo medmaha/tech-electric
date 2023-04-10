@@ -1,57 +1,68 @@
 import { writable } from 'svelte/store';
 
-type BasketItem = {
+export interface BasketItem {
 	id: string;
 	name: string;
 	imgUrl: string;
 	hint: string;
 	price: number;
 	qty: number;
-};
+}
 
-type Basket = {
+interface Basket {
 	total: number;
 	price: number;
 	items: BasketItem[];
-};
+}
 
-export const BasketCart = writable({ total: 0, price: 0, items: [] } as Basket);
+export const BasketCart = writable<Basket>({ total: 0, price: 0, items: [] });
 
 export function addItem(item: BasketItem) {
 	BasketCart.update((store) => {
 		let foundMatched = false;
+		let totalQuantity = 0;
+		let totalPrice = 0;
 
-		let $totalPrice: number = 0;
-		let $totalQuantity: number = 0;
-
-		let $basketItems = store.items.reduce((data, current, idx) => {
-			let __data: BasketItem;
+		const basketItems = store.items.map((current) => {
 			if (current.id === item.id) {
 				foundMatched = true;
-				__data = item;
-				data[idx] = {
-					...current,
-					...item
-				};
-			} else {
-				__data = current;
-
-				data.push(current);
+				totalQuantity += item.qty;
+				totalPrice += item.qty * item.price;
+				return { ...current, ...item };
 			}
-
-			$totalPrice += __data.price * __data.qty;
-			$totalQuantity += __data.qty;
-
-			return data;
-		}, [] as BasketItem[]);
+			totalQuantity += current.qty;
+			totalPrice += current.qty * current.price;
+			return current;
+		});
 
 		if (!foundMatched) {
-			$basketItems = [item, ...store.items];
+			basketItems.unshift(item);
+			totalQuantity += item.qty;
+			totalPrice += item.qty * item.price;
 		}
 
 		return {
-			price: $totalPrice,
-			total: $totalQuantity,
+			total: totalQuantity,
+			price: totalPrice,
+			items: basketItems
+		};
+	});
+}
+
+export function removeItem(itemId: string) {
+	BasketCart.update((store) => {
+		const $basketItems = store.items.filter((item) => item.id !== itemId);
+
+		const { sum, count } = $basketItems.reduce(
+			(total, item) => {
+				return { sum: (total.sum += item.price * item.qty), count: (total.count += item.qty) };
+			},
+			{ sum: 0, count: 0 }
+		);
+
+		return {
+			price: sum,
+			total: count,
 			items: $basketItems
 		};
 	});

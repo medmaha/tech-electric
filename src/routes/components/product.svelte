@@ -24,6 +24,7 @@
     let product = {
         ...data,
         id:data.imgUrl,
+        qty:1
     }
 
     function changeQty(action:'inc'|'dec'){
