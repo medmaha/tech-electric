@@ -68,14 +68,14 @@
 </script>
 
 
-<div class="product shadow-lg rounded-lg p-1 md:p-3 min-w-[100px] basis-[200px]">
+<div class="product shadow-lg rounded-lg p-1 md:p-3 basis-[150px] min-w-[100px] md:basis-[200px]">
     <div class="product-img w-full h-[110px] sm:h-[150px]">
         <img src={`/assets${product.imgUrl}`} alt={product.altText} class="max-w-[100px] sm:max-w-[140px] max-h-[100px] sm:max-h-[140px] h-auto w-full">
     </div>
     <div class="product-name">
-        <p title={product.name} class="py-1 mb-2 font-semibold text-sm sm:text-base text-center max-w-[180px] truncate px-1 sm:p-0">{product.name}</p>
+        <p title={product.name} class="py-1 sm:mb-2 font-semibold text-sm sm:text-base text-center sm:max-w-[180px] truncate px-1 sm:p-0">{product.name}</p>
     </div>
-    <div class="product-desc mb-2 w-full flex-1">
+    <div class="product-desc mb-1 sm:mb-2 w-full flex-1">
         <p title={product.hint} class="text-sm w-full text-center px-2 sm:px-0 max-w-full">
             {product.hint}
         </p>
@@ -87,13 +87,13 @@
         <input type="hidden" value={product._id} name='pid'>
         <input type="hidden" value={product.price} name='price'>
         <div  class="qty border-[1px] border-gray-400 rounded-md overflow-hidden flex items-center">
-            <button type='button' on:click={()=>changeQty('dec')} class="increment px-1 sm:px-2  transition hover:bg-gray-100">-</button>
+            <button type='button' on:click={()=>changeQty('dec')} class="increment px-2  transition hover:bg-gray-100">-</button>
             <span class="min-w-[30px] text-center inline-block bg-gray-200">{product.qty}</span>
-            <button type='button' on:click={()=>changeQty('inc')} class="decrement px-1 sm:px-2 transition hover:bg-gray-100">+</button>
+            <button type='button' on:click={()=>changeQty('inc')} class="decrement px-2 transition hover:bg-gray-100">+</button>
         </div>
-        <div class="w-max h-[35px]">
-            <button formaction='?/addItem' on:click={addToBasket} class="w-[35px] h-[35px] bg-gray-200 hover:bg-green-200 hover:bg-opacity-30 transition inline-flex items-center justify-center rounded-full hover:text-green-500">
-                <svg  xmlns="http://www.w3.org/2000/svg" fill-opacity='.8' fill='currentColor' width="18" height="18" viewBox="0 0 24 24"><path d="M11 9h2V6h3V4h-3V1h-2v3H8v2h3v3zm-4 9c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zm-9.83-3.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.86-7.01L19.42 4h-.01l-1.1 2-2.76 5H8.53l-.13-.27L6.16 6l-.95-2-.94-2H1v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.13 0-.25-.11-.25-.25z"/></svg>
+        <div class="w-max">
+            <button formaction='?/addItem' on:click={addToBasket} class="sm:w-[35px] sm:h-[35px] w-[30px] h-[30px] bg-gray-200 hover:bg-green-200 hover:bg-opacity-30 transition inline-flex items-center justify-center rounded-full hover:text-green-500">
+                <svg class="sm:w-[18px] sm:h-[18px] w-4 h-4"  xmlns="http://www.w3.org/2000/svg" fill-opacity='.8' fill='currentColor' width="18" height="18" viewBox="0 0 24 24"><path d="M11 9h2V6h3V4h-3V1h-2v3H8v2h3v3zm-4 9c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2zm-9.83-3.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.86-7.01L19.42 4h-.01l-1.1 2-2.76 5H8.53l-.13-.27L6.16 6l-.95-2-.94-2H1v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.13 0-.25-.11-.25-.25z"/></svg>
             </button>
         </div>
     </form>
