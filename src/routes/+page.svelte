@@ -20,7 +20,7 @@
 </script>
 
 
-<div in:fade class="">
+<div class="">
 	<Headers/>
 	<AboutUs/>
 	<Courses courses={JSON.parse(courses)}/>

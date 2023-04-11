@@ -69,12 +69,12 @@
 
 
 <div class="product shadow-lg rounded-lg p-1 md:p-3 basis-[150px] min-w-[100px] md:basis-[200px]">
-    <div class="product-img w-full h-[110px] sm:h-[150px]">
+    <a href={`/products/${product._id}`} class="product-img w-full h-[110px] sm:h-[150px]">
         <img src={`/assets${product.imgUrl}`} alt={product.altText} class="max-w-[100px] sm:max-w-[140px] max-h-[100px] sm:max-h-[140px] h-auto w-full">
-    </div>
-    <div class="product-name">
+    </a>
+    <a href={`/products/${product._id}`} class="product-name">
         <p title={product.name} class="py-1 sm:mb-2 font-semibold text-sm sm:text-base text-center sm:max-w-[180px] truncate px-1 sm:p-0">{product.name}</p>
-    </div>
+    </a>
     <div class="product-desc mb-1 sm:mb-2 w-full flex-1">
         <p title={product.hint} class="text-sm w-full text-center px-2 sm:px-0 max-w-full">
             {product.hint}

@@ -9,7 +9,7 @@
         <h3 class='text-xl sm:text-2xl text-center font-bold py-2 mb-4'>Our Courses</h3>
         <div class="flex justify-evenly items-center flex-wrap">
             {#each courses as course}
-            <div class="max-w-[600px] mt-10">
+            <a href={`/courses/${course.name.replace(/[\s]/, '-').toLowerCase()}`} class="block max-w-[600px] mt-10">
                 <div class="flex items-center justify-center  h-[100px]">
                     <img src={`/assets${course.imgUrl}`} width="100px" height="100px" alt="">
                 </div>
@@ -17,7 +17,7 @@
                 <p class="texts-sm text-center max-w-[35ch]">
                     {course.description}
                 </p>
-            </div>
+            </a>
             {/each}
         </div>
     </div>
