@@ -8,7 +8,7 @@
 	import NavLinks from "./navLinks.svelte";    
     let timeout : any
 
-    let navDrawer  = false
+    $: navDrawer  = false
 
     function toggleNavDrawer(){
         navDrawer = !navDrawer
@@ -46,15 +46,16 @@
             
             activeLink.classList.remove('active')
             
-            if (navDrawer){
-                navDrawer = false
-            }
+           
             
             const targetLink = ev.currentTarget.closest('li')
             
             timeout = setTimeout(()=>{
-                window.history.replaceState({}, '', href);
+                window.history.pushState({}, '', href);
                 targetLink.classList.add('active')
+                    if (navDrawer){
+                        navDrawer = !navDrawer
+                    }
             },ms)
     
         }
@@ -110,7 +111,7 @@
             
 
         {#if navDrawer}
-            <NavDrawer navigate={navigate}/>
+            <NavDrawer navigate={navigate} toggleDrawer={toggleNavDrawer}/>
         {/if}
     </div>
 

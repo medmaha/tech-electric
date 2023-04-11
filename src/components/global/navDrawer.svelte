@@ -2,10 +2,28 @@
 	import { onMount } from "svelte";
 	import { fade, scale } from "svelte/transition";
 
-     import {BasketCart} from "$store/basket"
-
+    import {BasketCart} from "$store/basket"
 
     export let navigate: (ev:any)=>void
+    export let toggleDrawer: ()=>void
+
+    let element:HTMLDivElement
+
+    function handleOuterClick(ev:any){
+      const drawerElm=  ev.target === element || !!ev.target.closest('.nav-drawer') 
+      || !!ev.target.closest('[data-drawer-toggler]') || ev.target.hasAttribute('data-drawer-toggler')
+
+      if (!drawerElm){
+        toggleDrawer()
+      }
+    }
+
+    onMount(()=>{
+        document.addEventListener('click', handleOuterClick)
+        return ()=>{
+            document.removeEventListener('click', handleOuterClick)
+        }
+    })
      
     function getCartQty(qty:number):string{
         return qty.toString()
@@ -14,7 +32,7 @@
 </script>
 
 
-<div in:fade out:scale class="md:hidden absolute left-0 top-full h-[calc(100vh-70px)] w-[90%] max-w-[450px] shadow-lg">
+<div bind:this={element} in:fade out:scale class="md:hidden absolute left-0 top-full h-[calc(100vh-70px)] w-[90%] max-w-[450px] shadow-lg">
     <div class="nav-drawer block w-full h-full border-gray-400 border-r-[2px]">
         <div class="flex w-full justify-center h-full p-2 sm:p-4">
             <ul class=" flex-1 flex flex-col gap-2 w-full">
@@ -33,7 +51,7 @@
                      <a on:click={navigate} href="/#aboutUs">About</a>
 
                 </li>
-                <li class="w-full bg-gray-400 h-[1px] px-8 leading-none"></li>
+                <li class="w-full bg-gray-400 h-[1px] px-8 leading-none" style="padding:0 2em;"></li>
                 <li class="rounded-md inline-block gap-2 w-full bg-green-500 bg-opacity-0 hover:bg-opacity-80 hover:text-white transition">
                      <a on:click={navigate} href="/blog">Blog</a>
 
@@ -89,7 +107,7 @@
         box-shadow: 0 2px 2px 0 rgba(0,0,0,.3);
     }
 
-    .nav-drawer ul li.inline-block{
+    ul li{
         cursor: pointer;
         font-size: large;
         padding: .25em .5em;
