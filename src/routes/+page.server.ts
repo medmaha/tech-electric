@@ -1,43 +1,33 @@
 import type { WithId } from 'mongodb';
-import { product } from '../database/products';
 import { courses } from '../database/courses';
+import Products, { type ProductInterface } from '../database/products';
 import type { PageServerLoad, Actions } from './$types';
-import { json } from '@sveltejs/kit';
+import type { Basket } from '../store/basket';
 
-export const load: PageServerLoad = async function ({ locals }): Promise<{
-	products: string;
-	courses: string;
-	basket?: any;
-}> {
-	const productsData = await product
-		.find(
-			{},
-			{
-				limit: 20
-			}
-		)
-		.toArray();
-	const coursesData = await courses
-		.find(
-			{},
-			{
-				limit: 20
-			}
-		)
-		.toArray();
+interface Locals {
+	$basket?: Basket;
+	// Add other properties as needed
+}
+
+export const load: PageServerLoad = async function ({ locals }: { locals: Locals }) {
+	const products = (await Products.find({})).flatMap((product) => {
+		const __data = product.toJSON();
+		__data['_id'] = product.id;
+		const data = __data as ProductInterface;
+		return data;
+	});
 
 	const $basket = locals.$basket;
 
 	if ($basket) {
 		return {
-			basket: $basket,
-			products: JSON.stringify(productsData),
-			courses: JSON.stringify(coursesData)
+			products,
+			basket: $basket
 		};
 	}
+
 	return {
-		products: JSON.stringify(productsData),
-		courses: JSON.stringify(coursesData)
+		products
 	};
 };
 

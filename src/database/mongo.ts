@@ -1,5 +1,6 @@
 import { MongoClient } from 'mongodb';
 // import { MONGO_URL } from '$env/static/private';
+import mongoose from 'mongoose';
 
 const devEnv = process.env.NODE_ENV === 'development';
 let connectionString: string;
@@ -13,9 +14,16 @@ else
 
 const client = new MongoClient(connectionString);
 
-export function startMongo(): Promise<MongoClient> {
+export async function startMongo(): Promise<any> {
 	console.log('starting mongodb...');
-	return client.connect();
+
+	const options = {
+		useNewUrlParser: true,
+		useUnifiedTopology: true
+	};
+
+	mongoose.connect(connectionString);
+	// return client.connect();
 }
 
 export default client.db();

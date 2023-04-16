@@ -9,7 +9,7 @@ export interface BasketItem {
 	qty: number;
 }
 
-interface Basket {
+export interface Basket {
 	total: number;
 	price: number;
 	items: BasketItem[];

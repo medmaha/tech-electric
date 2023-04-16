@@ -4,7 +4,6 @@
 
     import {BasketCart} from "$store/basket"
 
-    export let navigate: (ev:any)=>void
     export let toggleDrawer: ()=>void
 
     let element:HTMLDivElement
@@ -29,6 +28,19 @@
         return qty.toString()
     }
 
+    let timeout:any
+
+    function handleLinkClick(){
+
+        if (timeout){
+            clearTimeout(timeout)
+        }
+
+       timeout = setTimeout(()=>{
+            toggleDrawer()
+        },250)
+    }
+
 </script>
 
 
@@ -37,36 +49,34 @@
         <div class="flex w-full justify-center h-full p-2 sm:p-4">
             <ul class=" flex-1 flex flex-col gap-2 w-full">
                 <li class="active rounded-md inline-block gap-2 w-full bg-green-500 bg-opacity-0 hover:bg-opacity-80 hover:text-white transition">
-                     <a on:click={navigate} href="/#header">Home</a>
+                     <a on:click={handleLinkClick}  href="/">Home</a>
                 </li>
                 <li class="rounded-md inline-block gap-2 w-full bg-green-500 bg-opacity-0 hover:bg-opacity-80 hover:text-white transition">
-                    <a on:click={navigate} href="/#courses">Courses</a>
+                    <a on:click={handleLinkClick} href="/courses">Courses</a>
 
                 </li>
                 <li class="rounded-md inline-block gap-2 w-full bg-green-500 bg-opacity-0 hover:bg-opacity-80 hover:text-white transition">
-                     <a on:click={navigate} href="/#products">Products</a>
+                     <a on:click={handleLinkClick} href="/products">Products</a>
 
                 </li>
                 <li class="rounded-md inline-block gap-2 w-full bg-green-500 bg-opacity-0 hover:bg-opacity-80 hover:text-white transition">
-                     <a on:click={navigate} href="/#aboutUs">About</a>
+                     <a on:click={handleLinkClick} href="/#aboutUs">About</a>
 
                 </li>
                 <li class="w-full bg-gray-400 h-[1px] px-8 leading-none" style="padding:0 2em;"></li>
                 <li class="rounded-md inline-block gap-2 w-full bg-green-500 bg-opacity-0 hover:bg-opacity-80 hover:text-white transition">
-                     <a on:click={navigate} href="/blog">Blog</a>
+                     <a on:click={handleLinkClick} href="/blog">Blog</a>
 
                 </li>
                 <li class="rounded-md inline-block gap-2 w-full bg-green-500 bg-opacity-0 hover:bg-opacity-80 hover:text-white transition">
-                     <a on:click={navigate} href="/services">Services</a>
-                    
+                     <a on:click={handleLinkClick} href="/services">Services</a>
                 </li>
                 <li class="rounded-md inline-block gap-2 w-full bg-green-500 bg-opacity-0 hover:bg-opacity-80 hover:text-white transition">
-                     <a on:click={navigate} href="/contact">Contact</a>
-                    
+                     <a on:click={handleLinkClick} href="/#contact">Contact</a>
                 </li>
              
                 <li class="rounded-md relative inline-block gap-2 w-full bg-green-500 bg-opacity-0 hover:bg-opacity-80 hover:text-white transition">
-                     <a href='/basket' style="gap:0px;"  class="relative inline-flex items-center">
+                     <a on:click={handleLinkClick} href='/basket' style="gap:0px;"  class="relative inline-flex items-center">
                         <span class="pr-4">
                             Shopping Cart
                         </span>

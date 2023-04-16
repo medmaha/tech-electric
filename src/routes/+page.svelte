@@ -10,7 +10,7 @@
 
 	export let data : PageData
 
-	$:({products, courses, basket} = data)
+	$:({products, basket} = data)
 
 	$: if (basket){
 		// console.log(basket)
@@ -23,7 +23,7 @@
 <div class="">
 	<Headers/>
 	<AboutUs/>
-	<Courses courses={JSON.parse(courses)}/>
-	<ProductsContainer products={JSON.parse(products)}/>
+	<!-- <Courses courses={JSON.parse(courses)}/> -->
+	<ProductsContainer products={products}/>
 </div>
 

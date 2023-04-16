@@ -14,9 +14,9 @@ const PRODUCTS = [
 				'Multiple charging modes to fit your specific needs',
 				'Easy to install and use, with a user-friendly interface',
 				'Intelligent protection features to prevent overcharging, overheating and mor'
-			]
-		},
-		paragraph: `Our Solar MPPT Charge Controller is suitable for a variety of solar applications, from small off-grid systems to large commercial installations. It is backed by a warranty for your peace of mind, so you can trust that you are getting the best quality product on the market. Contact us today to learn more about our Solar MPPT Charge Controller and how it can benefit your solar system.`
+			],
+			paragraph: `Our Solar MPPT Charge Controller is suitable for a variety of solar applications, from small off-grid systems to large commercial installations. It is backed by a warranty for your peace of mind, so you can trust that you are getting the best quality product on the market. Contact us today to learn more about our Solar MPPT Charge Controller and how it can benefit your solar system.`
+		}
 	},
 	{
 		imgUrl: '/products-surge-switch.png',

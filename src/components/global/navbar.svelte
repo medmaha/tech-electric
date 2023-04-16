@@ -41,10 +41,11 @@
             if (timeout) clearTimeout(timeout)
 
         
-            const links = ev.currentTarget.closest('ul')!
-            const activeLink = links.querySelector('.active')!
-            
-            activeLink.classList.remove('active')
+            const links = ev.currentTarget.closest('ul')
+            const activeLink = links?.querySelector('.active')
+
+            if (activeLink) 
+                activeLink.classList.remove('active')
             
            
             
@@ -116,7 +117,7 @@
             
 
         {#if navDrawer}
-            <NavDrawer navigate={navigate} toggleDrawer={toggleNavDrawer}/>
+            <NavDrawer toggleDrawer={toggleNavDrawer}/>
         {/if}
     </div>
 
