@@ -11,12 +11,12 @@
   <Navbar/>
 
 
-  <main class="w-full">
+  <main class="w-full min-h-[72vh]">
     <slot />
   </main>
 
-  <footer class="text-sm leading-6 mt-16">
-    <div class="max-w-[1200px] px-2 sm:px-4 mx-auto">
+  <footer class="text-sm mt-4">
+    <div class="max-w-[1200px] p-2 sm:p-4 mx-auto border-t-[1px] border-slate-200">
       <Footer/>
     </div>
   </footer>

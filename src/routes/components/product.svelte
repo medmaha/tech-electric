@@ -1,30 +1,26 @@
 <script lang="ts">
     import {enhance} from '$app/forms'
 
-    type Product = {
-        _id:string
-        name:string,
-        imgUrl:string
-        altText:string
-        hint:string
-        price:number
-        qty:number
-        outline:{
-            specifications: string[]
-            features:string[]
-            title:string
-            heading:string
-            paragraph:string
-        }
-    }
-
     import {addItem} from '$store/basket'
+
+	import type { ProductInterface } from '../../database/products';
     
-    export let data : Product
+    export let data : ProductInterface
+
+    function getPrice(){
+        var a = Math.floor(Math.random() * 100)
+        var b = Math.floor(Math.random() * 102)
+
+        var c = `${a}.${b}`
+
+        return String(Number(c).toFixed(2))
+
+    }
     
     $: product = {
         ...data,
-        qty:1
+        qty:1,
+        price:getPrice()
     }
 
     function changeQty(action:'inc'|'dec'){
@@ -42,7 +38,7 @@
                 name:product.name,
                 imgUrl:product.imgUrl,
                 hint:product.hint,
-                price:product.price,
+                price:Number(product.price),
                 qty:product.qty
             })
     }

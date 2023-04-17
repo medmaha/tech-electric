@@ -1,30 +1,94 @@
 <script lang='ts'>
     import {BasketCart} from "$store/basket"
 	import { fade, scale } from "svelte/transition";
-    export let navigate: (ev:any)=>void
+
+    export let navDrawer : boolean
     
     function getCartQty(qty:number):string{
         return qty.toString()
     }
+
+    let timeout : any
+    let activeHref:string=''
+
+    const navigate = (ev:any)=>{
+        const href :string = ev.currentTarget.href
+        
+        
+        const pathName = window.location.pathname
+        activeHref = href
+        
+        if (pathName === '/' && href.match(/#/)){
+            ev.preventDefault()
+            activeHref = href.split('#')[1]
+
+            const targetElement = document.getElementById(activeHref)
+            targetElement?.scrollIntoView({behavior:'smooth'})
+            sleepNavigate(ev)
+
+        }else if (href.match(/#/)){
+            
+            activeHref = href.split('#')[1]
+            changeActiveLink(ev)
+            
+        }else{
+            window.location.href = href
+        }
+        
+    }
+
+
+
+    function sleepNavigate(ev:any, ms=500){
+        if (timeout) clearTimeout(timeout)
+    
+       const targetLink = changeActiveLink(ev, false)
+        
+        timeout = setTimeout(()=>{
+            window.history.pushState({}, '', activeHref);
+                targetLink.classList.add('active')
+                if (navDrawer){
+                    navDrawer = !navDrawer
+                }
+        },ms)
+
+    }
+
+    function changeActiveLink(ev:any, activate:boolean=true){
+        const links = ev.currentTarget.closest('ul')
+        const activeLink = links?.querySelector('.active')
+
+        if (activeLink) 
+            activeLink.classList.remove('active')
+            
+        const targetLink =  ev.currentTarget.closest('li')
+            
+        if (targetLink && activate) 
+            targetLink.classList.add('active')
+        
+        else
+            return targetLink
+    }
+    
 
 </script>
 
  <ul class="h-[95%] flex items-center justify-between gap-1">
 
     <li class="h-full flex items-center active">
-        <a on:click={navigate} href="/#header">Home</a>
+        <a on:click={changeActiveLink} href="/">Home</a>
     </li>
 
     <li class="h-full flex items-center">
-        <a on:click={navigate} href="/#courses">Courses</a>
+        <a on:click={changeActiveLink}  href="/courses">Courses</a>
     </li>
 
     <li class="h-full flex items-center">
-        <a on:click={navigate} href="/#products">Products</a>
+        <a on:click={changeActiveLink} href="/products">Products</a>
     </li>
 
     <li class="h-full flex items-center">
-        <a on:click={navigate} href="/#aboutUs">About</a>
+        <a on:click={navigate}  href="/#aboutUs">About</a>
     </li>
 
     <li class="px-1 h-full flex items-center relative">

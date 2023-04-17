@@ -1,6 +1,7 @@
 import type { WithId } from 'mongodb';
-import { courses } from '../database/courses';
 import Products, { type ProductInterface } from '../database/products';
+import Courses, { type CoursesInterface } from '../database/courses';
+
 import type { PageServerLoad, Actions } from './$types';
 import type { Basket } from '../store/basket';
 
@@ -16,17 +17,25 @@ export const load: PageServerLoad = async function ({ locals }: { locals: Locals
 		const data = __data as ProductInterface;
 		return data;
 	});
+	const courses = (await Courses.find({})).flatMap((course) => {
+		const __data = course.toJSON();
+		__data['_id'] = course.id;
+		const data = __data as CoursesInterface;
+		return data;
+	});
 
 	const $basket = locals.$basket;
 
 	if ($basket) {
 		return {
+			courses,
 			products,
 			basket: $basket
 		};
 	}
 
 	return {
+		courses,
 		products
 	};
 };

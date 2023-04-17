@@ -6,60 +6,12 @@
 	import NavDrawer from "./navDrawer.svelte";
 
 	import NavLinks from "./navLinks.svelte";    
-    let timeout : any
+
 
     $: navDrawer  = false
 
     function toggleNavDrawer(){
         navDrawer = !navDrawer
-    }
-    
-     const navigate = (ev:any)=>{
-        ev.preventDefault()
-        const href :string = ev.currentTarget.href
-        const pathName = window.location.pathname
-
-        if (href.match(/#/)){
-            const id = href.split('#')[1]
-            const targetElement = document.getElementById(id)
-            targetElement?.scrollIntoView({behavior:'smooth'})
-
-            if (id === 'header'){
-                if (pathName === '/'){
-                    sleep('/', ev, 250)
-                }else{
-                    window.location.href = '/'
-                }
-                return
-            }
-            sleep(href, ev)
-        }else{
-            window.location.href = href
-        }
-        
-        function sleep(href:string, ev:any, ms=500){
-            if (timeout) clearTimeout(timeout)
-
-        
-            const links = ev.currentTarget.closest('ul')
-            const activeLink = links?.querySelector('.active')
-
-            if (activeLink) 
-                activeLink.classList.remove('active')
-            
-           
-            
-            const targetLink = ev.currentTarget.closest('li')
-            
-            timeout = setTimeout(()=>{
-                window.history.pushState({}, '', href);
-                targetLink.classList.add('active')
-                    if (navDrawer){
-                        navDrawer = !navDrawer
-                    }
-            },ms)
-    
-        }
     }
     
 
@@ -68,7 +20,9 @@
 <nav class="h-[70px] bg-black bg-opacity-50 backdrop-blur-[2px] text-white z-50 shadow-md ">
     <div class="container gap-2 sm:gap-4  px-2">
         <div class="flex gap-2 items-center">
-            <a href='/' class="inline-flex gap-1 items-center">
+            <a href='/' class="inline-flex gap-1 items-center"
+                on:click={(ev)=>{ev.preventDefault();window.location.href='/'}}
+            >
                 <img src="/logo.png" width="45px" height="45px" class="rounded-full" alt="TETI (Tec Electrical) logo">
                 <h1 class="text-xl md:text-2xl font-bold tracking-wide">
                     TETI
@@ -90,7 +44,7 @@
         </div>
 
         <div class="h-full hidden md:block">
-           <NavLinks navigate={navigate}/>
+           <NavLinks navDrawer={navDrawer}/>
         </div>
         <div class="h-full sm:hidden flex justify-end flex-1">
            <button title="search" class="hover:text-green-500 transition">

@@ -48,7 +48,7 @@
 
 <div class="min-h-[100vh]">
 	<div class="product-detail px-4 mx-auto lg:max-w-[95%] w-full">
-		<div class="flex gap-4 items-center justity-center w-full flex-col md:flex-row">
+		<div class="flex gap-4  justity-center w-full flex-col md:flex-row">
 			<div class="w-full flex-1 max-w-[520px]">
 				<div
 					class="flex-1 block w-full bg-white shadow-md rounded-lg p-2 sm:p-4 lg:p-8 sm:min-w-[300px] min-h-[300px]"
@@ -77,9 +77,9 @@
 					</div>
 				</div> -->
 			</div>
-			<div class="pt-0  flex-1 w-full max-w-[520px]">
+			<div class="pt-0 self-center flex-1 w-full max-w-[520px]">
 				<h2 class="text-xl md:text-2xl text-center md:text-left font-semibold tracking-wide">
-					{product?.name}
+					{product?.outline.title || product?.name}
 				</h2>
 
 				<div class="reviews flex items-center justify-center md:justify-start gap-[1px]">
@@ -105,11 +105,22 @@
 				</div>
 
 				<div class="mt-4 ">
-					<h4 class="font-semibold">About this product:</h4>
-					<div class="text-left">
-						<p class="max-w-[55ch] desc">
-							{product?.hint}
-						</p>
+                    <div class="text-left">
+                        {#if product?.outline.heading}
+                            <p class="max-w-[55ch] desc">
+                                {product?.outline.heading || ''}
+                            </p>
+                            <!-- <br> -->
+                            <h4 class="font-semibold pt-4 ">About this product:</h4>
+                            <p class="max-w-[55ch] desc">
+                        
+                                {product?.outline.paragraph}
+                            </p>
+                        {:else}
+                            <p class="max-w-[55ch] desc">
+                                {product?.hint}
+                            </p>
+                        {/if}
 					</div>
 				</div>
 
@@ -207,7 +218,7 @@
 
 	.desc {
 		display: -webkit-box;
-		-webkit-line-clamp: 6;
+		/* -webkit-line-clamp: 10; */
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 		text-overflow: ellipsis;
