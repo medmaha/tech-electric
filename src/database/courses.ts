@@ -1,7 +1,3 @@
-import db from '$db/mongo';
-
-export const courses = db.collection('courses');
-
 import mongoose, { Document, Model } from 'mongoose';
 
 export interface CoursesInterface extends Document {

@@ -1,4 +1,3 @@
-import type { WithId } from 'mongodb';
 import Products, { type ProductInterface } from '../database/products';
 import Courses, { type CoursesInterface } from '../database/courses';
 
@@ -17,7 +16,7 @@ export const load: PageServerLoad = async function ({ locals }: { locals: Locals
 		const data = __data as ProductInterface;
 		return data;
 	});
-	const courses = (await Courses.find({})).flatMap((course) => {
+	const courses = (await Courses.find({}, { levels: 0 })).flatMap((course) => {
 		const __data = course.toJSON();
 		__data['_id'] = course.id;
 		const data = __data as CoursesInterface;
@@ -49,7 +48,7 @@ export const actions = {
 
 		if (!qty || !pid) return { error: true };
 
-		let $basket = cookies.get('$basket');
+		const $basket = cookies.get('$basket');
 		let $value: { [x: string]: { [y: string]: string } };
 
 		if ($basket) {
@@ -73,7 +72,7 @@ export const actions = {
 
 		if (!pid) return { error: true };
 
-		let $basket = cookies.get('$basket');
+		const $basket = cookies.get('$basket');
 		let $value: { [x: string]: { [y: string]: string } };
 
 		if ($basket) {
